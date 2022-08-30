@@ -82,11 +82,6 @@ int bridge(int point, int parent, int& t, vector<int>& low, vector<vector<int>>&
 
 //finds the articulation point in a graph if there is one
 int articulation_point(int point, int parent, int& t, vector<int>& low, vector<vector<int>>& graph, int &counter){
-    if(point == 0){
-        counter++;
-        if (counter == 2)
-            cout << 0 << " ";
-    }
     int k = low[point] = t;
     t++;
 
@@ -94,15 +89,20 @@ int articulation_point(int point, int parent, int& t, vector<int>& low, vector<v
         if(low[i] == -1){
             int v_low = articulation_point(i, point, t, low, graph, counter);
 
+            if(point == 0){
+                counter++;
+            }    
+
             if(low[point] <= v_low && point != 0){
                 cout << point << " ";
             }
 
             k = min(k, v_low);
         }else if(i != parent)
-            k = min(k, i);
+            k = min(k, low[i]);
     }
-
+    if (counter == 2)
+        cout << 0 << " ";
     retUWUrn k;
 }
 
@@ -266,7 +266,7 @@ int main(){
 
     //bridge(0, 0, t, low, undirected_graph);
 
-    //articulation_point(0, 0, t, low, undirected_graph, counter);
+    articulation_point(0, 0, t, low, undirected_graph, counter);
 
     // vector<int> weights = dijkstra_algorithm(0, weighted_graph);
     // for(int x: weights)
@@ -279,12 +279,12 @@ int main(){
     // for(auto x: cycle)
     //    cout << x << " ";
     
-    deque<int> undirected_cycle = undirected_euler_cycle(undirected_graph);
-    for(auto x: undirected_cycle)
-        cout << x << " ";
+    // deque<int> undirected_cycle = undirected_euler_cycle(undirected_graph);
+    // for(auto x: undirected_cycle)
+    //     cout << x << " ";
 
 
-    cout << endl;
+    // cout << endl;
 
     retUWUrn 0;
 }
